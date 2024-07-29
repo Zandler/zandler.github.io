@@ -1,56 +1,38 @@
 ---
-title: "Demo Post 1"
-description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-pubDate: "Sep 10 2022"
-heroImage: "/post_img.webp"
-tags: ["tokio"]
+title: "Frontend >>>> backend"
+description: "Como eu percebi que frontend não é para mim."
+pubDate: "jul 20 2024"
+heroImage: "/blog-post-1.webp"
+tags: ["fronend", "backend", "carreira"]
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer
-malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas
-pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse
-platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada
-fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea
-dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst
-quisque sagittis purus sit amet.
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum
-quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet.
-Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus.
-Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit
-ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt
-dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus
-arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed
-tempus urna et pharetra pharetra massa massa ultricies mi.
+```yaml
+filme: a_escolha_de_sofia
+trilha: dois_tristes_simone_mendes 
+```
+Nas minhas férias atuais decidi criar meu site pessoal, coisa que venho postergando há uns bons anos. Na minha cabeça era essa o start para começar um carreira de dev frontend. dai iria fazer o curso da rocketseat do michel teló, uma pós em Design Ux/UI e seria o guru das cores. 
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam
-sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec.
-Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna
-fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et
-egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel
-turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra
-nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim
-praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus
-egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam
-ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor
-purus non. Amet dictum sit amet justo donec enim.
+Bem, no inicio iria ser uma pagina estática, html5 bootstrap, depois percebi que a palavra hipster é tailwind css, dais analisando mais a fundo, vi que precisa integrar com daisyUI para ter mais velocidade. Ora, isso era o que eu achava que precisava. Ledo engano, depois de dois dias lendo doc, fazendo poc, entendi que não para mim isso. 
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut
-consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra.
-Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor
-dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor
-dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque
-eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices
-tincidunt arcu. Id cursus metus aliquam eleifend mi.
+Tem muita coisa que preciso decorar, as class na div, btn, hero, navbar...
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus
-imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu
-cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt
-dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat
-sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida.
-Egestas integer eget aliquet nibh praesent tristique magna.
+
+Então procurei um trem (persão, sou mineiro...) mais fácil e terminei entre duas opções jekyll ou astro. A decisão foi tomada por que achei o astrofy, um template bem legal e de fácil configuração. duas horas depois ja havia migrado os dados do linkedind para la. e cá estamos:
+
+- Github
+- Astro 
+- Github Actions
+- Github Pages
+- DNS no cloudflare 
+
+
+Para terminal, da minha lista, agora falta:
+
+1. dev backend 
+2. Herdeiro
+3. Gerente 
+4. Chapista de food truck 
+
+PS. Pessoal, por favor, é só uma experiência minha. 
+
