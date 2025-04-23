@@ -10,8 +10,8 @@ interface Props {
 
 const {
   type = 'person',
-  title = 'Zandler - SRE / DevOps',
-  description = 'Personal page with my things',
+  title = 'Zandler Oliveira | SRE',
+  description = 'Portifolio, skill and experience',
   imageUrl = 'https://renatokhael.com/android-chrome-512x512.png'
 } = Astro.props;
 
@@ -21,14 +21,14 @@ const baseUrl = 'https://zandler.com.br';
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Zandler",
+  "name": "Renato Khael",
   "url": baseUrl,
   "image": `${baseUrl}/android-chrome-512x512.png`,
   "sameAs": [
-    "https://www.youtube.com/@zandler",
+    "https://www.linkedin.com/in/zandler-oliveira/",
     "https://www.youtube.com/@zandler"
   ],
-  "jobTitle": "SRE / DevOps",
+  "jobTitle": "Site Reliability Engineer",
   "worksFor": {
     "@type": "Organization",
     "name": "Zandler Oliveira"
@@ -45,7 +45,7 @@ const websiteSchema = {
   "description": description,
   "author": {
     "@type": "Person",
-    "name": "Renato Khael"
+    "name": "Zandler Oliveira"
   },
   "potentialAction": {
     "@type": "SearchAction",

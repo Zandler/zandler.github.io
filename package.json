@@ -1,5 +1,5 @@
 {
-  "name": "zandler",
+  "name": "zandler.com.br",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -17,7 +17,6 @@
     "postcss": "^8.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "remark-smartypants": "^3.0.2",
     "tailwindcss": "^3.4.17"
   }
 }

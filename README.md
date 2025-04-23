@@ -1,4 +1,4 @@
-# Renato Khael | Software Engineer Portfolio
+# ZANDLER OLIVEIRA | SRE / DEVOPS
 
 ![Portfolio Theme](public/assets/theme.jpg)
 
@@ -87,7 +87,7 @@ A modern and responsive portfolio website built with Astro and React, showcasing
    yarn dev
    ```
 
-4. Open your browser and navigate to `http://localhost:3000`
+4. Open your browser and navigate to `http://localhost:4321`
 
 ## 📝 Customization
 

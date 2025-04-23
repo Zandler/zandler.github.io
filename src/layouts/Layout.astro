@@ -15,8 +15,8 @@ interface Props {
 }
 
 const { 
-	title, 
-	description = 'SRE / Devops in pratice',
+	title = "Zandler Oliveira", 
+	description = 'SRE / DevOps',
 	canonicalUrl = Astro.url.pathname 
 } = Astro.props;
 
@@ -63,7 +63,7 @@ const fullCanonicalUrl = `${siteUrl}${canonicalUrl}`;
 		<meta name="twitter:image" content={`${siteUrl}/android-chrome-512x512.png`} />
 		
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<title>Zandler Oliveira</title>
 		
 		<!-- Structured Data -->
 		<StructuredData 

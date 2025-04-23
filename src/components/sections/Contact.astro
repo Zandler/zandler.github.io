@@ -6,21 +6,19 @@ import Button from "../ui/Button.astro";
 
 <Section
   id="contact"
-  title="Contato"
-  subtitle="Entre em contato para discutirmos seu projeto ou oportunidade"
+  title="Contact"
+  subtitle="If you want to keep in touch"
 >
-  <div class="grid md:grid-cols-2 gap-12">
+  <div class="grid md:grid-cols-1 gap-12">
     <Card class="p-8">
       <div class="space-y-6">
         <h3 class="text-2xl font-bold">
-          Se não quer perder tempo, me contrata aqui!
+          If you need a spearker, a solver for you it problems....
         </h3>
         <p class="text-gray-600 dark:text-gray-300">
-          Estou disponível para projetos freelance, oportunidades fixas ou até
-          para aquela sua ideia maluca que ainda está no guardanapo. Se envolve
-          código, criatividade e um bom desafio, pode contar comigo.
+          
         </p>
-        <p>Já vou avisando que meu job não é tão barato não ein! É qualidade, não quantidade.</p>
+        <p>uh, not call me, it's blocked if i dont know who is (SPAM), text me</p>
 
         <div class="space-y-4 mt-8">
           <div class="flex items-start gap-4">
@@ -43,8 +41,8 @@ import Button from "../ui/Button.astro";
             <div>
               <h4 class="font-medium">Email</h4>
               <a
-                href="mailto:contato@exemplo.com"
-                class="text-primary hover:underline">renatokhael@gmail.com</a
+                href="mailto:falecom@zandler.com.br"
+                class="text-primary hover:underline">falecom@zandler.com.br</a
               >
             </div>
           </div>
@@ -69,9 +67,9 @@ import Button from "../ui/Button.astro";
             <div>
               <h4 class="font-medium">Whatsapp</h4>
               <a
-                href="https://wa.me/5511986565114"
+                href="https://wa.me/5531973356840"
                 class="text-primary hover:underline"
-                target="_blank">(11) 98656-5114</a
+                target="_blank">+55 31 97335-6840</a
               >
             </div>
           </div>
@@ -99,9 +97,9 @@ import Button from "../ui/Button.astro";
               </svg>
             </div>
             <div>
-              <h4 class="font-medium">Localização</h4>
+              <h4 class="font-medium">Location</h4>
               <p class="text-gray-600 dark:text-gray-300">
-                São Bernardo do Campo, SP - Brasil
+                Belo Horizonte/MG - Brasil
               </p>
             </div>
           </div>
@@ -109,87 +107,9 @@ import Button from "../ui/Button.astro";
       </div>
     </Card>
 
-    <Card class="p-8">
-      <form id="contact-form" class="space-y-6">
-        <div>
-          <label for="name" class="block text-sm font-medium mb-1"
-            >Nome Completo</label
-          >
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
-            placeholder="Seu nome"
-          />
-        </div>
-
-        <div>
-          <label for="email" class="block text-sm font-medium mb-1">Email</label
-          >
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
-            placeholder="seu.email@exemplo.com"
-          />
-        </div>
-
-        <div>
-          <label for="phone" class="block text-sm font-medium mb-1"
-            >Whatsapp</label
-          >
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors"
-            placeholder="(11) 98765-4321"
-          />
-        </div>
-
-        <div>
-          <label for="message" class="block text-sm font-medium mb-1"
-            >Descrição do Projeto</label
-          >
-          <textarea
-            id="message"
-            name="message"
-            rows="4"
-            required
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors resize-none"
-            placeholder="Conte um pouco sobre o seu projeto ou ideia..."
-          ></textarea>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            class="w-full bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
-          >
-            Enviar Mensagem
-          </button>
-        </div>
-      </form>
-    </Card>
+    
   </div>
 </Section>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("contact-form") as HTMLFormElement;
 
-    form?.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      // Em um cenário real, você enviaria os dados para seu backend
-      // Simulando envio bem-sucedido
-      alert("Mensagem enviada com sucesso! Entrarei em contato em breve.");
-      form.reset();
-    });
-  });
-</script>
 
