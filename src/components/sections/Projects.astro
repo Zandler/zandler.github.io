@@ -1,0 +1,103 @@
+---
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  liveUrl?: string;
+  repoUrl?: string;
+}
+
+const projects: Project[] = [
+  {
+    title: 'ERP para Postos Linx.',
+    description: 'ERP completo com dezenas de módulos para gerenciamento de postos de combustível.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1170&auto=format&fit=crop',
+    tags: ['Vue.js', 'Nuxt.js', 'TypeScript', 'NuxtUI'],
+    liveUrl: 'https://example.com/project1',
+    
+  },
+  {
+    title: 'E-commerce Netshoes.',
+    description: 'Maior e-commerce esportivo do Brasil, com milhões de acessos semanais.',
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1036&auto=format&fit=crop',
+    tags: ['Vue.js', 'Vuex', 'TailwindCSS', 'Firebase'],
+    liveUrl: 'https://www.netshoes.com.br/',
+    
+  },
+  {
+    title: 'Plataforma QuintoAndar.',
+    description: 'Maior plataforma de aluguel de imóveis do Brasil, com milhões de acessos semanais.',
+    image: 'https://images.unsplash.com/photo-1553267751-1c148a7280a1?q=80&w=1169&auto=format&fit=crop',
+    tags: ['React', 'Node.js', 'MongoDB', 'Socket.io'],
+    liveUrl: 'https://www.quintoandar.com.br/',
+  },
+  {
+    title: 'Plataforma iSolve (Atta).',
+    description: 'Plataforma  distribuição de crédito imobiliário e garantias locatícias utilizada por mais de 1500 imobiliárias.',
+    image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1170&auto=format&fit=crop',
+    tags: ['Vue.js', 'Nuxt.js', 'Express', 'PostgreSQL'],
+    liveUrl: 'https://garantia.quintocred.com.br/',
+  },
+  {
+    title: 'Plataforma de Imóveis NPi.',
+    description: 'Aplicação SSR focada em SEO e performance com Next.js. CMS com gerenciamento de imóveis e clientes.',
+    image: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?q=80&w=1170&auto=format&fit=crop',
+    tags: ['React', 'GraphQL', 'Apollo', 'TypeScript'],
+    liveUrl: 'https://www.npiconsultoria.com.br/',
+   
+  },
+  {
+    title: 'Aplicativo Mobile GabiVegan.',
+    description: 'Aplicativo para entrega de comida com rastreamento em tempo real e sistema de avaliação.',
+    image: 'https://images.unsplash.com/photo-1565843708714-52ecf69ab81f?q=80&w=1170&auto=format&fit=crop',
+    tags: ['React Native', 'Redux', 'Firebase', 'Google Maps API'],
+    liveUrl: 'https://example.com/project6',
+  },
+];
+---
+
+<Section id="projects" title="Projetos" subtitle="Uma seleção dos meus melhores trabalhos e projetos recentes">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+      projects.map((project) => (
+        <Card hover={true} class="overflow-hidden h-full flex flex-col">
+          <div class="h-48 overflow-hidden">
+            <img src={project.image} alt={project.title} class="w-full h-full object-cover" />
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <h3 class="text-xl font-bold mb-2">{project.title}</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">{project.description}</p>
+            
+            <div class="mt-auto">
+              <div class="flex flex-wrap gap-2 mb-4">
+                {project.tags.map((tag) => (
+                  <span class="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-md">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              
+              <div class="flex gap-3">
+                {project.liveUrl && (
+                  <Button href={project.liveUrl} target="_blank" size="sm">
+                    Conhecer projeto
+                  </Button>
+                )}
+                {project.repoUrl && (
+                  <Button href={project.repoUrl} target="_blank" variant="outline" size="sm">
+                    Código
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</Section> 

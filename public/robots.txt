@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://astrofy-template.netlify.app/sitemap-index.xml
+# Disallow specific patterns if needed
+# Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://renatokhael.com/sitemap.xml 
