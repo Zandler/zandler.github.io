@@ -1,22 +1,28 @@
 {
-  "name": "zandler.com.br",
+  "name": "zandler-com-br",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Personal site for Zandler Oliveira — SRE / DevOps",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^4.2.4",
-    "@astrojs/tailwind": "^6.0.2",
-    "@fontsource/poppins": "^5.2.5",
-    "astro": "^5.7.4",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwindcss": "^3.4.17"
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "astro": "^7.2.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
   }
 }
