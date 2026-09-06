@@ -1,0 +1,36 @@
+---
+import { skillBars } from '../data/resume';
+---
+
+<section class="section section-alt" id="skills">
+  <div class="container">
+    <p class="eyebrow">Skills</p>
+    <h2 class="section-heading">Solving my problems, but with what?</h2>
+
+    <div class="skill-bars-grid">
+      {
+        skillBars.map((group) => (
+          <div class="card skill-bar-card">
+            <h3 class="skill-bar-title">{group.title}</h3>
+            {
+              group.skills.map((s) => (
+                <div class="skill-bar">
+                  <div class="skill-bar-head">
+                    <span class="skill-badge" style={`background-color: ${s.color}1f; color: ${s.color};`}>
+                      {s.letter}
+                    </span>
+                    <span class="skill-label">{s.label}</span>
+                    <span class="skill-level">{s.level}%</span>
+                  </div>
+                  <div class="skill-track">
+                    <div class="skill-fill" style={`width: ${s.level}%; background-color: ${s.color};`}></div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

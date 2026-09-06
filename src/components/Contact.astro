@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+---
+
+<section class="section section-alt" id="contact">
+  <div class="container">
+    <p class="eyebrow">Contact</p>
+    <h2 class="section-heading">If you want to keep in touch</h2>
+
+    <div class="card contact-card">
+      <h3 class="contact-heading">If you need a speaker, a solver for your it problems...</h3>
+      <p class="contact-note">
+        uh, not call me, it's blocked if i dont know who is (SPAM), text me
+      </p>
+
+      <div class="contact-list">
+        <div class="contact-item">
+          <span class="contact-icon"><Icon name="email" /></span>
+          <div>
+            <h4>Email</h4>
+            <a href={`mailto:${site.author.email}`} class="contact-value">{site.author.email}</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon contact-whatsapp"><Icon name="phone" /></span>
+          <div>
+            <h4>WhatsApp</h4>
+            <a href={site.author.whatsappUrl} target="_blank" rel="noopener" class="contact-value">
+              {site.author.whatsapp}
+            </a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon"><Icon name="location" /></span>
+          <div>
+            <h4>Location</h4>
+            <span class="contact-value">{site.author.location}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
