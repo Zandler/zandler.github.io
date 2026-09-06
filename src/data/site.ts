@@ -13,7 +13,10 @@ export interface SocialLink {
     | 'arrow-right'
     | 'arrow-left'
     | 'sun'
-    | 'moon';
+    | 'moon'
+    | 'youtube'
+    | 'phone'
+    | 'location';
 }
 
 export const site = {
@@ -24,14 +27,19 @@ export const site = {
   url: 'https://zandler.com.br',
   author: {
     name: 'Zandler Oliveira',
-    email: 'zandler@zandler.com.br',
-    location: 'Belo Horizonte, BR',
-    resume: '/resume/Resume.pdf',
+    role: 'SRE / DevOps',
+    email: 'falecom@zandler.com.br',
+    whatsapp: '+55 31 97335-6840',
+    whatsappUrl: 'https://wa.me/5531973356840',
+    location: 'Belo Horizonte/MG - Brasil',
+    resume: '/cv.pdf',
+    resumeLabel: 'Download CV',
   },
   socials: {
     github: { url: 'https://github.com/zandler', label: 'GitHub', icon: 'github' },
     linkedin: { url: 'https://www.linkedin.com/in/zandler-oliveira/', label: 'LinkedIn', icon: 'linkedin' },
-    email: { url: 'mailto:zandler@zandler.com.br', label: 'Email', icon: 'email' },
+    youtube: { url: 'https://www.youtube.com/@zandler', label: 'YouTube', icon: 'youtube' },
+    email: { url: 'mailto:falecom@zandler.com.br', label: 'Email', icon: 'email' },
     rss: { url: '/rss.xml', label: 'RSS', icon: 'rss' },
   } satisfies Record<string, SocialLink>,
 };

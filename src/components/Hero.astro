@@ -4,17 +4,16 @@ import { site, withBase } from '../data/site';
 import Icon from './Icon.astro';
 
 const rolesJson = JSON.stringify(typingRoles);
-const nameParts = site.author.name.split(' ');
-const firstName = nameParts.shift() ?? '';
-const lastName = nameParts.join(' ');
 ---
 
 <section class="hero">
   <div class="stars" aria-hidden="true"></div>
   <div class="container hero-inner">
     <div>
-      <p class="hero-greeting">Hello, I'm</p>
-      <h1>{firstName} {lastName && <span class="accent">{lastName}</span>}</h1>
+      <p class="hero-greeting">Hello People,</p>
+      <h1>
+        Let's really talk about bringing <span class="accent">Dev and Ops</span> together?
+      </h1>
       <p class="hero-typed">
         <span class="typed" id="typed-roles" data-roles={rolesJson}></span><span class="typed-cursor" aria-hidden="true">_</span>
       </p>
@@ -25,8 +24,13 @@ const lastName = nameParts.join(' ');
         and always with culture.
       </p>
 
+      <div class="hero-cta">
+        <a class="btn btn-primary" href={withBase('/#contact')}>Call me!</a>
+        <a class="btn btn-ghost" href={withBase('/#projects')}>Projects</a>
+      </div>
+
       <div class="social-row">
-        {Object.values(site.socials).map((s) => (
+        {Object.values(site.socials).filter((s) => !s.url.endsWith('/rss.xml')).map((s) => (
           <a class="social-link" href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">
             {s.icon && <Icon name={s.icon} />}
             {s.label}

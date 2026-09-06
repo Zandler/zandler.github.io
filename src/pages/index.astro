@@ -1,8 +1,13 @@
 ---
 import Layout from '../components/Layout.astro';
 import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
 import { site, withBase } from '../data/site';
-import { experience, skillGroups } from '../data/resume';
+import { experience, skillBars } from '../data/resume';
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -10,7 +15,7 @@ const personJsonLd = {
   name: site.author.name,
   url: site.url,
   image: `${site.url}${withBase('/img/og.jpg')}`,
-  jobTitle: experience[0]?.role,
+  jobTitle: site.author.role,
   worksFor: { '@type': 'Organization', name: experience[0]?.company },
   email: `mailto:${site.author.email}`,
   address: {
@@ -20,11 +25,17 @@ const personJsonLd = {
   sameAs: [
     site.socials.github.url,
     site.socials.linkedin.url,
+    site.socials.youtube.url,
   ],
-  knowsAbout: skillGroups.flatMap((g) => g.skills).slice(0, 8),
+  knowsAbout: skillBars.flatMap((g) => g.skills.map((s) => s.label)).slice(0, 8),
 };
 ---
 
 <Layout title={undefined} jsonLd={personJsonLd}>
   <Hero />
+  <About />
+  <Experience />
+  <Skills />
+  <Projects />
+  <Contact />
 </Layout>
