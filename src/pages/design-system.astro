@@ -1,0 +1,118 @@
+---
+import Layout from '../components/Layout.astro';
+import SystemBox from '../components/diagram/SystemBox.astro';
+import Arrow from '../components/diagram/Arrow.astro';
+import Layer from '../components/diagram/Layer.astro';
+import { withBase } from '../data/site';
+
+const colors: { token: string; css: string; note: string }[] = [
+  { token: '--paper', css: 'var(--paper)', note: 'Page background' },
+  { token: '--surface', css: 'var(--surface)', note: 'Raised surfaces' },
+  { token: '--ink-strong', css: 'var(--ink-strong)', note: 'Headings' },
+  { token: '--ink', css: 'var(--ink)', note: 'Body text' },
+  { token: '--muted', css: 'var(--muted)', note: 'Secondary text' },
+  { token: '--line', css: 'var(--line)', note: 'Hairlines' },
+  { token: '--accent', css: 'var(--accent)', note: 'Blueprint accent' },
+];
+
+const typeScale = [
+  { token: 'display / h1', spec: 'Space Grotesk · 600 · clamp(2rem, 5vw, 3rem)' },
+  { token: 'h2', spec: 'Space Grotesk · 600 · clamp(1.4rem, 3vw, 1.7rem)' },
+  { token: 'body', spec: 'Inter · 400 · 16.5px · 1.7 line-height' },
+  { token: 'meta / labels', spec: 'JetBrains Mono · 0.72–0.82rem · uppercase, tracked' },
+  { token: 'code', spec: 'JetBrains Mono · 0.88em' },
+];
+---
+
+<Layout
+  title="Blueprint"
+  description="Blueprint — the design system of zandler.com.br. Tokens, components and diagram language, documented and public."
+>
+  <section class="section">
+    <div class="container" style="max-width: 900px;">
+      <p class="kicker">Design system · public</p>
+      <h1>Blueprint<span class="num-prefix" style="font-size: 0.5em;">_</span></h1>
+      <p class="muted" style="max-width: 64ch;">
+        The design system running this site: tokens, components and the diagram language used in the
+        essays. This page is the site's own study case — everything documented here is applied right
+        here, live. It evolves by writing core, as the essays do.
+      </p>
+
+      <h2 style="margin-top: 3rem;"><span class="num-prefix">01</span> Color</h2>
+      <p class="muted" style="font-size: 0.95rem;">
+        Light-first: reading on engineering paper. Dark mode is the same tokens inverted by
+        <code>html[data-theme]</code> — one accent, hairlines, no gradients.
+      </p>
+      <div class="swatch-row">
+        {colors.map((c) => (
+          <div class="swatch">
+            <div class="chip" style={`background: ${c.css}; border-bottom: 1px solid var(--line);`}></div>
+            <div class="label">
+              <code>{c.token}</code>
+              <div style="font-size: 0.8rem; color: var(--muted);">{c.note}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h2><span class="num-prefix">02</span> Typography</h2>
+      <p class="muted" style="font-size: 0.95rem;">
+        Space Grotesk for display, Inter for reading, JetBrains Mono for anything structured. Mono is
+        reserved for structure — never for walls of text.
+      </p>
+      <div style="border-top: 1px solid var(--line-strong); margin-top: 1.25rem;">
+        {typeScale.map((t) => (
+          <div class="type-sample">
+            <span class="tag">{t.token}</span>
+            <span>{t.spec}</span>
+          </div>
+        ))}
+      </div>
+
+      <h2><span class="num-prefix">03</span> Diagram language</h2>
+      <p class="muted" style="font-size: 0.95rem;">
+        Essays about architecture and design systems need diagrams that look like this site. The
+        language is made of a few primitives — system boxes, arrows, layers — authored as components
+        inside the essays, never pasted from an image or generator.
+      </p>
+
+      <div class="diagram-wrap">
+        <div class="sys-flow" style="display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;">
+          <SystemBox kind="system" label="Edge" sub="CDN · WAF" />
+          <Arrow label="HTTP" />
+          <SystemBox kind="component" label="Web" sub="Astro · static" />
+          <Arrow label="tokens" />
+          <SystemBox kind="data" label="Content" sub="markdown" />
+        </div>
+      </div>
+
+      <div class="diagram-wrap">
+        <div style="display: grid; gap: 0.75rem;">
+          <Layer role="Interface" items={['Blueprint components', 'prose', 'diagram primitives']} />
+          <Layer role="Content" items={['essays (EN)', 'essays (PT)', 'design-system docs']} />
+          <Layer role="Build" items={['Astro', 'Cloudflare Pages', 'RSS · sitemap']} />
+        </div>
+      </div>
+
+      <h2><span class="num-prefix">04</span> Components</h2>
+      <div style="border-top: 1px solid var(--line-strong); margin-top: 1.25rem;">
+        <div class="type-sample">
+          <span class="tag">EssayRow</span>
+          <span>The list row: index · title · category · date — the spine of the site.</span>
+        </div>
+        <div class="type-sample">
+          <span class="tag">CatChip</span>
+          <span>Mono category chip with the blueprint accent.</span>
+        </div>
+        <div class="type-sample">
+          <span class="tag">PolicyBox</span>
+          <span>Editorial block used on /sobre — a declaration, styled as one.</span>
+        </div>
+        <div class="type-sample">
+          <span class="tag">Diagram primitives</span>
+          <span>SystemBox, Arrow, Layer — <a href={withBase('/sobre')}>documented in use</a>.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

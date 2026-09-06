@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../data/site';
+import { categoryOf, readingTimeOf } from '../data/content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  index?: number;
+}
+
+const { post, index } = Astro.props;
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<article class="essay-row">
+  <span class="essay-index">{index !== undefined ? String(index).padStart(2, '0') : '··'}</span>
+  <div>
+    <h3><a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a></h3>
+    {post.data.subtitle && <p class="essay-sub">{post.data.subtitle}</p>}
+    <div class="essay-meta">
+      <span class="cat-chip">{categoryOf(post).label}</span>
+      <time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+      <span>{readingTimeOf(post)} min read</span>
+    </div>
+  </div>
+</article>

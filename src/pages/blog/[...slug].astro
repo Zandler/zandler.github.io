@@ -1,9 +1,9 @@
 ---
 import Layout from '../../components/Layout.astro';
-import Icon from '../../components/Icon.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { site, withBase } from '../../data/site';
+import { categoryOf, readingTimeOf } from '../../data/content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -28,9 +28,18 @@ const idx = allPosts.findIndex((p) => p.id === post.id);
 const prev = idx > 0 ? allPosts[idx - 1] : undefined;
 const next = idx >= 0 && idx < allPosts.length - 1 ? allPosts[idx + 1] : undefined;
 
-const readingTime = Math.max(1, Math.ceil((post.body?.split(/\s+/).length ?? 0) / 220));
+const ptPosts = await getCollection('blog-pt', ({ data }) => !data.draft && data.translationOf === post.id);
+const pt = ptPosts[0];
+
 const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const description = post.data.description ?? post.data.subtitle ?? `${post.data.title} — by ${post.data.author}`;
+const canonical = `${site.url}${withBase(`/blog/${post.id}/`)}`;
+
+const alternates = [{ href: canonical, hreflang: 'en' }];
+if (pt) {
+  const ptUrl = `${site.url}${withBase(`/pt/blog/${pt.id}/`)}`;
+  alternates.push({ href: ptUrl, hreflang: 'pt-BR' });
+}
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -40,7 +49,8 @@ const jsonLd = {
   datePublished: post.data.date.toISOString(),
   ...(post.data.updated && { dateModified: post.data.updated.toISOString() }),
   author: { '@type': 'Person', name: post.data.author },
-  url: `${site.url}${withBase(`/blog/${post.id}/`)}`,
+  url: canonical,
+  inLanguage: 'en',
 };
 ---
 
@@ -49,30 +59,27 @@ const jsonLd = {
   description={description}
   type="article"
   image={post.data.coverImage ?? '/img/og.jpg'}
-  canonical={`${site.url}/blog/${post.id}/`}
+  canonical={canonical}
   jsonLd={jsonLd}
+  alternates={alternates}
 >
   <article class="section">
     <div class="container">
-      <nav aria-label="Breadcrumb" style="margin-bottom: 1.5rem;">
-        <a href={withBase('/blog')}><Icon name="arrow-left" size={14} /> Back to blog</a>
+      <nav aria-label="Breadcrumb">
+        <a href={withBase('/blog')}>← Essays</a>
       </nav>
 
-      <header style="max-width: 70ch;">
-        <div class="post-meta">
-          <span class="category-badge {post.data.category}">{post.data.category}</span>
+      <div class="post-rule" />
+
+      <header class="post-head" style="max-width: 72ch;">
+        <div class="essay-meta">
+          <span class="cat-chip">{categoryOf(post).label}</span>
           <time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
-          <span class="dot">&middot;</span>
-          <span>{readingTime} min read</span>
-          {post.data.updated && (
-            <>
-              <span class="dot">&middot;</span>
-              <span>updated {dateFmt.format(post.data.updated)}</span>
-            </>
-          )}
+          <span>{readingTimeOf(post)} min read</span>
+          {post.data.updated && <span>updated {dateFmt.format(post.data.updated)}</span>}
         </div>
-        <h1 style="margin: 0.75rem 0 0.5rem;">{post.data.title}</h1>
-        {post.data.subtitle && <p class="muted" style="font-size: 1.1rem;">{post.data.subtitle}</p>}
+        <h1 style="margin: 0.75rem 0 0.4rem;">{post.data.title}</h1>
+        {post.data.subtitle && <p class="muted" style="font-size: 1.15rem;">{post.data.subtitle}</p>}
         <p class="post-meta" style="margin-top: 1rem;">By {post.data.author}</p>
         {post.data.tags.length > 0 && (
           <div class="tag-list">
@@ -82,16 +89,30 @@ const jsonLd = {
       </header>
 
       {post.data.coverImage && (
-        <img src={withBase(post.data.coverImage)} alt={post.data.title} style="border-radius: var(--radius-lg); margin: 2rem 0; width: 100%; object-fit: cover; max-height: 420px;" />
+        <img
+          src={withBase(post.data.coverImage)}
+          alt={post.data.title}
+          style="border: 1px solid var(--line); border-radius: var(--radius-md); margin: 1.5rem 0; width: 100%; object-fit: cover; max-height: 420px;"
+        />
       )}
 
       <div class="prose" style="margin-top: 2rem;">
         <Content />
       </div>
 
-      <nav aria-label="Post navigation" class="pagination" style="justify-content: space-between; margin-top: 3rem;">
-        {next && <a href={withBase(`/blog/${next.id}/`)} style="display: inline-flex; align-items: center; gap: 0.5rem;"><Icon name="arrow-left" size={16} /> {next.data.title}</a>}
-        {prev && <a href={withBase(`/blog/${prev.id}/`)} style="display: inline-flex; align-items: center; gap: 0.5rem; margin-left: auto;">{prev.data.title} <Icon name="arrow-right" size={16} /></a>}
+      <div class="post-actions">
+        <div class="tag-list">
+          {pt ? (
+            <a class="lang-link" href={withBase(`/pt/blog/${pt.id}/`)} rel="alternate" lang="pt-BR">Ler em português →</a>
+          ) : (
+            <span class="lang-link">PT version coming with the next essay cycle</span>
+          )}
+        </div>
+      </div>
+
+      <nav aria-label="Post navigation" class="pagination">
+        <span>{next && <a href={withBase(`/blog/${next.id}/`)}>← {next.data.title}</a>}</span>
+        <span>{prev && <a href={withBase(`/blog/${prev.id}/`)} style="margin-left: auto;">{prev.data.title} →</a>}</span>
       </nav>
     </div>
   </article>

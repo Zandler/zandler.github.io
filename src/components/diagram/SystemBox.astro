@@ -1,0 +1,15 @@
+---
+interface Props {
+  label: string;
+  kind?: 'component' | 'system' | 'data';
+  sub?: string;
+}
+
+const { label, kind = 'component', sub } = Astro.props;
+---
+
+<div class="sys-box" data-kind={kind}>
+  <span class="sys-kind">{kind}</span>
+  <span class="sys-label">{label}</span>
+  {sub && <span style="font-size: 0.78rem; color: var(--muted);">{sub}</span>}
+</div>

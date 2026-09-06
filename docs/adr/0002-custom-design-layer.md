@@ -1,0 +1,3 @@
+# Camada de design própria sobre Astro
+
+Mantemos Astro (content collections, rotas, RSS, sitemap) mas descartamos a identidade visual e os componentes do tema astro-wanderer, substituídos por uma camada de design própria: design tokens, componentes reutilizáveis e linguagem de diagrama. A troca é custosa porque o design layer é código nosso; sem contexto, um leitor estranharia "por que não usar o tema pronto". Escolhemos customização sobre tema porque o site *é sobre* design systems — a própria camada de design é o artefato central, e um layout único não sobrevive sobre a identidade de um template.

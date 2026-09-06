@@ -1,0 +1,3 @@
+# Conteúdo bilingue completo: inglês canônico + português em /pt/
+
+O site é bilingue por decisão editorial: todo ensaio existe em inglês (versão canônica) e em português brasileiro em `/pt/`, traduzido e revisado pelo autor — nunca por tradução automática. Escolhemos bilinguismo completo sobre EN-only ou PT-only porque o autor escreve e fala em EN para alcance técnico global e em PT para o público brasileiro, mantendo a autenticidade do texto como critério de qualidade da tradução.

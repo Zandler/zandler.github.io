@@ -1,0 +1,3 @@
+# Design system público em /design-system
+
+O design system do próprio site é documentado publicamente na página `/design-system`: tokens, componentes centrais e linguagem de diagrama, mantidos em sincronia com o código. Escolhemos publicar sobre manter interno porque o conteúdo do site é sobre design systems — a página é estudo de caso vivo e material de credibilidade, aceitando o custo permanente de documentação que acompanha o código.

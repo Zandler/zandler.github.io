@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/space-grotesk';
 import '../styles/global.css';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
@@ -14,6 +15,7 @@ interface Props {
   canonical?: string;
   noindex?: boolean;
   jsonLd?: object;
+  alternates?: { href: string; hreflang: string }[];
 }
 
 const {
@@ -24,6 +26,7 @@ const {
   canonical = site.url + Astro.url.pathname,
   noindex = false,
   jsonLd,
+  alternates = [],
 } = Astro.props;
 
 const pageTitle = title ? `${title} · ${site.shortTitle}` : site.title;
@@ -40,9 +43,10 @@ const imageUrl = withBase(image);
     <meta name="author" content={site.author.name} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
-    <link rel="icon" type="image/x-icon" href={withBase('/favicon.ico')} />
     <link rel="alternate" type="application/rss+xml" title={site.title} href={withBase('/rss.xml')} />
     <meta name="generator" content={Astro.generator} />
+
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
 
     {noindex && <meta name="robots" content="noindex" />}
 
@@ -70,7 +74,7 @@ const imageUrl = withBase(image);
     {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
-    <Header />
+    <Header active={Astro.url.pathname} />
     <main>
       <slot />
     </main>

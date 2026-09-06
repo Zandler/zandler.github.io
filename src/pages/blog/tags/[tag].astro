@@ -1,6 +1,6 @@
 ---
 import Layout from '../../../components/Layout.astro';
-import PostCard from '../../../components/PostCard.astro';
+import EssayRow from '../../../components/EssayRow.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -17,14 +17,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.tag
 );
 ---
 
-<Layout title={`#${tag}`} description={`Posts tagged #${tag}`}>
+<Layout title={`#${tag}`} description={`Essays tagged #${tag}`}>
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Tag</p>
+      <p class="kicker">Tag</p>
       <h1>#{tag}</h1>
-      <p class="muted">{posts.length} post{posts.length === 1 ? '' : 's'}</p>
-      <div class="post-list" style="margin-top: 2rem;">
-        {posts.map((p) => <PostCard post={p} />)}
+      <p class="muted">{posts.length} essay{posts.length === 1 ? '' : 's'}</p>
+      <div class="essay-list" style="margin-top: 2rem;">
+        {posts.map((post, i) => <EssayRow post={post} index={i + 1} />)}
       </div>
     </div>
   </section>

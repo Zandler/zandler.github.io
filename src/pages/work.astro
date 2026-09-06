@@ -1,44 +1,89 @@
 ---
 import Layout from '../components/Layout.astro';
-import Experience from '../components/Experience.astro';
-import Education from '../components/Education.astro';
-import Skills from '../components/Skills.astro';
+import Icon from '../components/Icon.astro';
 import { site, withBase } from '../data/site';
-import { experience } from '../data/resume';
+import { experience, education, projects } from '../data/resume';
 
-const current = experience[0];
-const links = Object.values(site.socials).filter((s) => s.url.startsWith('http') || s.url.startsWith('mailto'));
+const current = experience.find((e) => e.current) ?? experience[0];
+const socials = Object.values(site.socials).filter((s) => !s.url.endsWith('/rss.xml'));
 ---
 
 <Layout
   title="Work"
-  description={current ? `${site.author.name} — ${current.role} at ${current.company}.` : `${site.author.name}'s work experience.`}
-  image="/img/og.jpg"
+  description={`${site.author.name} — ${current ? `${current.role} at ${current.company}` : 'SRE / DevOps engineer'}.`}
 >
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Work</p>
-      <h1>{site.author.name}</h1>
-      {current && (
-        <p class="muted" style="margin: 0 0 0.25rem;">
-          {current.role} · {current.company}
-        </p>
-      )}
-      <p class="muted" style="margin: 0 0 1.5rem;">
-        {site.author.location}
-        {links.map((s) => (
-          <>
-            {' · '}
-            <a href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">{s.label}</a>
-          </>
-        ))}
+      <p class="kicker">Work</p>
+      <h1>Fifteen years in systems that move money.</h1>
+      <p class="muted" style="max-width: 60ch; margin-bottom: 1.75rem;">
+        {current.role} · {current.company} — {site.author.location}. Full history below, CV
+        available if you need the formal version.
       </p>
+      <div class="home-actions">
+        <a class="btn" href={withBase(site.author.resume)}>
+          <Icon name="download" size={16} /> {site.author.resumeLabel}
+        </a>
+        {socials.map((s) => (
+          <a class="btn" href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">
+            {s.label}
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <Experience />
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <p class="kicker">Experience</p>
+      <div class="timeline">
+        {experience.map((e) => (
+          <div class="timeline-item">
+            <span class="timeline-date">{e.start} — {e.end}</span>
+            <div>
+              <h3>{e.role} <span class="timeline-company">· {e.company}</span></h3>
+              {e.summary && <p class="timeline-summary">{e.summary}</p>}
+              <ul class="timeline-bullets">
+                {e.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+              {e.badges && (
+                <div class="badge-row">
+                  {e.badges.map((b) => <span class="badge">{b}</span>)}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
 
-  <Education />
+      <p class="kicker" style="margin-top: 3rem;">Selected work</p>
+      <div class="timeline">
+        {projects.map((p) => (
+          <div class="timeline-item">
+            <span class="timeline-date" style="visibility: hidden;">—</span>
+            <div>
+              <h3><a href={p.url} target="_blank" rel="noopener">{p.title}</a></h3>
+              <p class="timeline-summary">{p.description}</p>
+              <div class="badge-row">
+                {p.tags.map((t) => <span class="badge">{t}</span>)}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-  <Skills />
+      <p class="kicker" style="margin-top: 3rem;">Education</p>
+      <div class="timeline">
+        {education.map((e) => (
+          <div class="timeline-item">
+            <span class="timeline-date">{e.start} — {e.end}</span>
+            <div>
+              <h3>{e.degree} {e.field}</h3>
+              <p class="timeline-summary">{e.school}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>

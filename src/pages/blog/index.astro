@@ -1,36 +1,46 @@
 ---
 import Layout from '../../components/Layout.astro';
-import PostCard from '../../components/PostCard.astro';
+import EssayRow from '../../components/EssayRow.astro';
 import { getCollection } from 'astro:content';
-import { withBase } from '../../data/site';
+import { categories } from '../../data/content';
 
-const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 
-const tags = [...new Set(allPosts.flatMap((p) => p.data.tags))].sort();
-const counts = new Map<string, number>();
-for (const p of allPosts) for (const t of p.data.tags) counts.set(t, (counts.get(t) ?? 0) + 1);
+const byCategory = (id: string) => posts.filter((p) => p.data.category === id);
+const count = (id: string) => byCategory(id).length;
 ---
 
-<Layout title="Blog" description="Notes, essays, and the occasional tangent — everything I've written lately.">
+<Layout title="Essays" description="Essays on design systems, systems architecture and engineering — written by hand.">
   <section class="section">
     <div class="container">
-      <p class="eyebrow">Blog</p>
-      <h1>Writings</h1>
-      <p class="muted" style="max-width: 60ch;">
-        Things I'm learning, building, or thinking about — sometimes technical, sometimes not.
+      <p class="kicker">Essays</p>
+      <h1>Long-form, written by hand.</h1>
+      <p class="muted" style="max-width: 58ch;">
+        One essay per topic per month, in English first and Brazilian Portuguese after. No generated
+        text anywhere — <a href="/sobre/">see the editorial policy</a>.
       </p>
 
-      {tags.length > 0 && (
-        <div class="tag-list" style="margin: 1.5rem 0 2.5rem;">
-          {tags.map((t) => (
-            <a class="tag" href={withBase(`/blog/tags/${t}/`)}>#{t} <span style="opacity: 0.6;">({counts.get(t)})</span></a>
-          ))}
-        </div>
-      )}
+      <ul class="cat-tabs">
+        {categories.map((c) => (
+          <li><a href={`#${c.id}`} aria-current={undefined}>{c.index} · {c.label} ({count(c.id)})</a></li>
+        ))}
+      </ul>
 
-      <div class="post-list">
-        {posts.map((p) => <PostCard post={p} />)}
+      <div class="essay-list">
+        {categories.map((c) => (
+          <div style="margin-bottom: 3rem;">
+            <h2 id={c.id} style="scroll-margin-top: calc(var(--nav-h) + 16px); font-size: 1.4rem;">
+              <span class="num-prefix">{c.index}</span> {c.label}
+            </h2>
+            <p class="muted" style="margin: 0.15rem 0 1.5rem; font-size: 0.95rem;">{c.blurb}</p>
+            {byCategory(c.id).map((post, i) => <EssayRow post={post} index={i + 1} />)}
+            {byCategory(c.id).length === 0 && (
+              <p class="muted">Nothing published yet — the first essays are being written.</p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   </section>

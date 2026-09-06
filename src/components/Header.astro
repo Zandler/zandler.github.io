@@ -1,27 +1,36 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
-import { site, withBase } from '../data/site';
+import { withBase } from '../data/site';
+
+interface Props {
+  active?: string;
+}
+
+const { active = '/' } = Astro.props;
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/work', label: 'Work' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/travel', label: 'Travel' },
+  { href: '/blog', label: 'Essays' },
+  { href: '/design-system', label: 'Blueprint' },
+  { href: '/trabalho', label: 'Work' },
+  { href: '/sobre', label: 'About' },
 ].map((l) => ({ ...l, href: withBase(l.href) }));
+
+const isActive = (href: string) => (href === '/' ? active === '/' || active === '' : active.startsWith(href));
 ---
 
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href={withBase('/')}>
-      <span aria-hidden="true">&gt;</span> {site.shortTitle}
-      <span>_</span>
+      <span class="num-prefix" aria-hidden="true">&gt;</span>
+      zandler<span class="brand-dot">.</span>
     </a>
     <nav aria-label="Main">
       <ul class="nav-links">
         {
           navLinks.map((l) => (
             <li>
-              <a href={l.href} aria-current={Astro.url.pathname === l.href ? 'page' : undefined}>
+              <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
                 {l.label}
               </a>
             </li>
