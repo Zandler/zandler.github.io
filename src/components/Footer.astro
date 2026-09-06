@@ -1,28 +1,54 @@
 ---
 import { site, withBase } from '../data/site';
+
+const navLinks = [
+  { href: '/blog', label: 'Essays' },
+  { href: '/design-system', label: 'Blueprint' },
+  { href: '/trabalho', label: 'Work' },
+  { href: '/sobre', label: 'About' },
+].map((l) => ({ ...l, href: withBase(l.href) }));
+
+const socials = Object.values(site.socials).filter((s) => !s.url.endsWith('/rss.xml'));
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <div>
-      <p class="footer-name">{site.author.name}</p>
-      <p class="footer-role">{site.author.role}</p>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-block">
+        <p class="footer-name">{site.author.name}<span style="color: var(--accent);">.</span></p>
+        <p class="footer-note">
+          Essays on design systems and systems architecture. Every word written
+          and edited by hand — in English, then Brazilian Portuguese.
+        </p>
+      </div>
+
+      <div class="footer-block">
+        <h4>Index</h4>
+        <ul class="footer-links">
+          {navLinks.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-block">
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          {socials.map((s) => (
+            <li>
+              <a href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                {s.label}
+              </a>
+            </li>
+          ))}
+          <li><a href={withBase(site.author.resume)}>{site.author.resumeLabel}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; {new Date().getFullYear()} {site.author.name} · {site.author.location}</span>
+        <span>Written by a human. <a href={withBase('/sobre')}>Editorial policy</a>.</span>
+      </div>
     </div>
-    <ul class="footer-links">
-      <li><a href={withBase('/')}>Home</a></li>
-      <li><a href={withBase('/#about')}>About</a></li>
-      <li><a href={withBase('/#experience')}>Experience</a></li>
-      <li><a href={withBase('/#skills')}>Skills</a></li>
-      <li><a href={withBase('/#projects')}>Projects</a></li>
-      <li><a href={withBase('/#contact')}>Contact</a></li>
-    </ul>
-    <ul class="footer-links">
-      {Object.values(site.socials).filter((s) => !s.url.endsWith('/rss.xml')).map((s) => (
-        <li>
-          <a href={withBase(s.url)} target={s.url.startsWith('http') ? '_blank' : undefined} rel="noopener">{s.label}</a>
-        </li>
-      ))}
-    </ul>
-    <p>&copy; {new Date().getFullYear()} {site.author.name} &middot; {site.author.location}</p>
   </div>
 </footer>

@@ -1,0 +1,13 @@
+---
+interface Props {
+  role: string;
+  items: string[];
+}
+
+const { role, items } = Astro.props;
+---
+
+<div class="sys-layer">
+  <span class="layer-role">{role}</span>
+  <span class="layer-items">{items.join(' · ')}</span>
+</div>

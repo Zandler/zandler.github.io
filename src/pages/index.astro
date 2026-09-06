@@ -1,41 +1,130 @@
 ---
 import Layout from '../components/Layout.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Experience from '../components/Experience.astro';
-import Skills from '../components/Skills.astro';
-import Projects from '../components/Projects.astro';
-import Contact from '../components/Contact.astro';
+import { getCollection } from 'astro:content';
 import { site, withBase } from '../data/site';
-import { experience, skillBars } from '../data/resume';
+import { categoryOf, readingTimeOf } from '../data/content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const recent = posts.slice(0, 4);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
 const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: site.author.name,
   url: site.url,
-  image: `${site.url}${withBase('/img/og.jpg')}`,
   jobTitle: site.author.role,
-  worksFor: { '@type': 'Organization', name: experience[0]?.company },
   email: `mailto:${site.author.email}`,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: site.author.location,
-  },
-  sameAs: [
-    site.socials.github.url,
-    site.socials.linkedin.url,
-    site.socials.youtube.url,
-  ],
-  knowsAbout: skillBars.flatMap((g) => g.skills.map((s) => s.label)).slice(0, 8),
+  address: { '@type': 'PostalAddress', addressLocality: site.author.location },
+  sameAs: [site.socials.github.url, site.socials.linkedin.url],
 };
 ---
 
-<Layout title={undefined} jsonLd={personJsonLd}>
-  <Hero />
-  <About />
-  <Experience />
-  <Skills />
-  <Projects />
-  <Contact />
+<Layout title={undefined} description={site.description} jsonLd={personJsonLd}>
+  <section class="home-hero">
+    <div>
+      <p class="kicker">zandler.com.br · design systems & systems architecture</p>
+      <h1>
+        Systems that build systems,
+        <span style="color: var(--accent);">written by hand.</span>
+      </h1>
+      <p class="lede">
+        I'm Zandler Oliveira — SRE and architect with 15+ years in fintech and banking. Here I write
+        about design systems, system architecture and the culture of engineering. Every essay is
+        written and edited by me: no generated text, no shortcuts.
+      </p>
+      <div class="home-actions">
+        <a class="btn btn-primary" href={withBase('/blog')}>Read the essays</a>
+        <a class="btn" href={withBase('/design-system')}>Blueprint — the design system</a>
+        <a class="btn" href={withBase('/sobre')}>About & the editorial policy</a>
+      </div>
+    </div>
+
+    <aside class="home-rail" aria-label="Quick facts">
+      <div class="rail-row">
+        <span class="rail-key">Role</span>
+        <span class="rail-value">SRE / DevOps · Architect</span>
+      </div>
+      <div class="rail-row">
+        <span class="rail-key">Focus</span>
+        <span class="rail-value">Design Systems · Architecture · SRE</span>
+      </div>
+      <div class="rail-row">
+        <span class="rail-key">Languages</span>
+        <span class="rail-value">EN (primary) · PT-BR</span>
+      </div>
+      <div class="rail-row">
+        <span class="rail-key">Status</span>
+        <span class="rail-value">Launching · monthly essays</span>
+      </div>
+      <div class="rail-row">
+        <span class="rail-key">Location</span>
+        <span class="rail-value">{site.author.location}</span>
+      </div>
+    </aside>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <p class="kicker">Recent essays</p>
+      {recent.length > 0 ? (
+        <div class="essay-list">
+          {recent.map((post, i) => (
+            <article class="essay-row">
+              <span class="essay-index">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3><a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a></h3>
+                {post.data.subtitle && <p class="essay-sub">{post.data.subtitle}</p>}
+                <div class="essay-meta">
+                  <span class="cat-chip">{categoryOf(post).label}</span>
+                  <time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+                  <span>{readingTimeOf(post)} min · EN</span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="muted" style="border-top: 1px solid var(--line-strong); padding-top: 1.5rem;">
+          First essays are being written right now — the site launches with the issues live.
+        </p>
+      )}
+
+      {recent.length > 0 && (
+        <p style="margin-top: 1.5rem; font-size: 0.92rem;">
+          <a href={withBase('/blog')}>All essays <span aria-hidden="true">→</span></a>
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="home-about">
+    <div class="container">
+      <div class="home-about-grid">
+        <div>
+          <p class="kicker">About the author</p>
+          <h2>A career in systems that keep money moving.</h2>
+        </div>
+        <div>
+          <p>
+            Fifteen years across banks and fintechs in Brazil — from data centers to Kubernetes, from
+            ticket firefighting to platform teams. I work at the intersection of design and
+            infrastructure, which is exactly where design systems and architecture meet.
+          </p>
+          <p>
+            This site is a living artifact: everything I describe in the essays is applied here first,
+            under the <a href={withBase('/design-system')}>Blueprint</a> design system.
+          </p>
+          <p class="home-actions">
+            <a class="btn" href={withBase('/trabalho')}>Work history</a>
+            <a class="btn" href={withBase(site.author.resume)}>{site.author.resumeLabel}</a>
+            <a class="btn" href={withBase(`mailto:${site.author.email}`)}>Email me</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
