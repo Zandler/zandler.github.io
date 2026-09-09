@@ -29,7 +29,7 @@ export const site = {
     name: 'Zandler Oliveira',
     role: 'SRE / DevOps · Systems Architect',
     email: 'falecom@zandler.com.br',
-    location: 'Belo Horizonte, Brazil',
+    location: 'Vila Nova de Poiares, Portugal',
     resume: '/cv.pdf',
     resumeLabel: 'Download CV',
   },

@@ -1,5 +1,5 @@
 {
-  "name": "zandler-com-br",
+  "name": "zandler-github-io",
   "type": "module",
   "version": "1.0.0",
   "description": "Personal site for Zandler Oliveira — SRE / DevOps",
@@ -14,7 +14,7 @@
     "check": "astro check",
     "astro": "astro",
     "deploy": "wrangler pages deploy dist",
-    "deploy:prod": "wrangler pages deploy dist --project-name zandler-com-br"
+    "deploy:prod": "wrangler pages deploy dist --project-name zandler-github-io"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -28,5 +28,8 @@
     "@astrojs/check": "^0.9.10",
     "typescript": "^6.0.3",
     "wrangler": "^4.129.0"
+  },
+  "overrides": {
+    "sharp": "0.35.4"
   }
 }

@@ -25,46 +25,48 @@ const personJsonLd = {
 
 <Layout title={undefined} description={site.description} jsonLd={personJsonLd}>
   <section class="home-hero">
-    <div>
-      <p class="kicker">zandler.com.br · design systems & systems architecture</p>
-      <h1>
-        Systems that build systems,
-        <span style="color: var(--accent);">written by hand.</span>
-      </h1>
-      <p class="lede">
-        I'm Zandler Oliveira — SRE and architect with 15+ years in fintech and banking. Here I write
-        about design systems, system architecture and the culture of engineering. Every essay is
-        written and edited by me: no generated text, no shortcuts.
-      </p>
-      <div class="home-actions">
-        <a class="btn btn-primary" href={withBase('/blog')}>Read the essays</a>
-        <a class="btn" href={withBase('/design-system')}>Blueprint — the design system</a>
-        <a class="btn" href={withBase('/sobre')}>About & the editorial policy</a>
+    <div class="container home-hero-grid">
+      <div>
+        <p class="kicker">zandler.com.br · design systems & systems architecture</p>
+        <h1>
+          Systems that build systems,
+          <span style="color: var(--accent);">written by hand.</span>
+        </h1>
+        <p class="lede">
+          I'm Zandler Oliveira — SRE and architect with 15+ years in fintech and banking. Here I write
+          about design systems, system architecture and the culture of engineering. Every essay is
+          written and edited by me: no generated text, no shortcuts.
+        </p>
+        <div class="home-actions">
+          <a class="btn btn-primary" href={withBase('/blog')}>Read the essays</a>
+          <a class="btn" href={withBase('/design-system')}>Blueprint — the design system</a>
+          <a class="btn" href={withBase('/sobre')}>About & the editorial policy</a>
+        </div>
       </div>
-    </div>
 
-    <aside class="home-rail" aria-label="Quick facts">
-      <div class="rail-row">
-        <span class="rail-key">Role</span>
-        <span class="rail-value">SRE / DevOps · Architect</span>
-      </div>
-      <div class="rail-row">
-        <span class="rail-key">Focus</span>
-        <span class="rail-value">Design Systems · Architecture · SRE</span>
-      </div>
-      <div class="rail-row">
-        <span class="rail-key">Languages</span>
-        <span class="rail-value">EN (primary) · PT-BR</span>
-      </div>
-      <div class="rail-row">
-        <span class="rail-key">Status</span>
-        <span class="rail-value">Launching · monthly essays</span>
-      </div>
-      <div class="rail-row">
-        <span class="rail-key">Location</span>
-        <span class="rail-value">{site.author.location}</span>
-      </div>
-    </aside>
+      <aside class="home-rail" aria-label="Quick facts">
+        <div class="rail-row">
+          <span class="rail-key">Role</span>
+          <span class="rail-value">SRE / DevOps · Architect</span>
+        </div>
+        <div class="rail-row">
+          <span class="rail-key">Focus</span>
+          <span class="rail-value">Design Systems · Architecture · SRE</span>
+        </div>
+        <div class="rail-row">
+          <span class="rail-key">Languages</span>
+          <span class="rail-value">EN (primary) · PT-BR</span>
+        </div>
+        <div class="rail-row">
+          <span class="rail-key">Status</span>
+          <span class="rail-value">Launching · monthly essays</span>
+        </div>
+        <div class="rail-row">
+          <span class="rail-key">Location</span>
+          <span class="rail-value">{site.author.location}</span>
+        </div>
+      </aside>
+    </div>
   </section>
 
   <section class="section" style="padding-top: 0;">
@@ -119,7 +121,7 @@ const personJsonLd = {
             under the <a href={withBase('/design-system')}>Blueprint</a> design system.
           </p>
           <p class="home-actions">
-            <a class="btn" href={withBase('/trabalho')}>Work history</a>
+            <a class="btn" href={withBase('/work')}>Work history</a>
             <a class="btn" href={withBase(site.author.resume)}>{site.author.resumeLabel}</a>
             <a class="btn" href={withBase(`mailto:${site.author.email}`)}>Email me</a>
           </p>

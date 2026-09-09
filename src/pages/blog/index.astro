@@ -3,43 +3,77 @@ import Layout from '../../components/Layout.astro';
 import EssayRow from '../../components/EssayRow.astro';
 import { getCollection } from 'astro:content';
 import { categories } from '../../data/content';
+import { withBase } from '../../data/site';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
+const featured = posts[0];
+
 const byCategory = (id: string) => posts.filter((p) => p.data.category === id);
 const count = (id: string) => byCategory(id).length;
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<Layout title="Essays" description="Essays on design systems, systems architecture and engineering — written by hand.">
+<Layout
+  title="Essays"
+  description="Essays on design systems, systems architecture and engineering — written by hand."
+>
   <section class="section">
     <div class="container">
-      <p class="kicker">Essays</p>
-      <h1>Long-form, written by hand.</h1>
-      <p class="muted" style="max-width: 58ch;">
-        One essay per topic per month, in English first and Brazilian Portuguese after. No generated
-        text anywhere — <a href="/sobre/">see the editorial policy</a>.
-      </p>
+      <header class="blog-head">
+        <div>
+          <p class="kicker">Essays</p>
+          <h1>Long-form, written by hand.</h1>
+          <p class="muted" style="max-width: 58ch; margin-bottom: 0;">
+            One essay per topic per month, in English first and Brazilian Portuguese after. No generated
+            text anywhere — <a href={withBase('/sobre')}>see the editorial policy</a>.
+          </p>
+        </div>
+        <a class="btn" href={withBase('/rss.xml')} rel="noopener">RSS</a>
+      </header>
 
-      <ul class="cat-tabs">
+      {featured && (
+        <article class="featured">
+          <a class="featured-main" href={withBase(`/blog/${featured.id}/`)}>
+            <div class="featured-meta">
+              <span class="cat-chip">Latest essay</span>
+              <time datetime={featured.data.date.toISOString()}>{dateFmt.format(featured.data.date)}</time>
+            </div>
+            <h2>{featured.data.title}</h2>
+            {featured.data.subtitle && <p class="featured-sub">{featured.data.subtitle}</p>}
+            <span class="featured-cta">Read the essay →</span>
+          </a>
+          <aside class="featured-side" aria-hidden="true">
+            <span class="featured-idx">Ø</span>
+          </aside>
+        </article>
+      )}
+
+      <nav class="cat-tabs" aria-label="Jump to category">
         {categories.map((c) => (
-          <li><a href={`#${c.id}`} aria-current={undefined}>{c.index} · {c.label} ({count(c.id)})</a></li>
+          <a href={`#${c.id}`}>{c.index} · {c.label} <span class="cat-count">({count(c.id)})</span></a>
         ))}
-      </ul>
+      </nav>
 
       <div class="essay-list">
         {categories.map((c) => (
-          <div style="margin-bottom: 3rem;">
-            <h2 id={c.id} style="scroll-margin-top: calc(var(--nav-h) + 16px); font-size: 1.4rem;">
-              <span class="num-prefix">{c.index}</span> {c.label}
-            </h2>
-            <p class="muted" style="margin: 0.15rem 0 1.5rem; font-size: 0.95rem;">{c.blurb}</p>
-            {byCategory(c.id).map((post, i) => <EssayRow post={post} index={i + 1} />)}
+          <section style="margin-bottom: 3.5rem;">
+            <header class="cat-head">
+              <h2 id={c.id} style="scroll-margin-top: calc(var(--nav-h) + 16px); font-size: 1.4rem;">
+                <span class="num-prefix">{c.index}</span> {c.label}
+              </h2>
+              <p class="muted" style="margin: 0; font-size: 0.95rem;">{c.blurb}</p>
+            </header>
+            {byCategory(c.id).map((post, i) => (
+              <EssayRow post={post} index={i + 1} ctx={c.label} />
+            ))}
             {byCategory(c.id).length === 0 && (
-              <p class="muted">Nothing published yet — the first essays are being written.</p>
+              <p class="muted empty-note">Nothing published yet — the first essays are being written.</p>
             )}
-          </div>
+          </section>
         ))}
       </div>
     </div>
