@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "zandler-com-br",
+      "name": "zandler-github-io",
       "dependencies": {
         "@astrojs/rss": "^4.0.19",
         "@astrojs/sitemap": "^3.7.3",

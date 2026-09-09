@@ -14,7 +14,7 @@
     "check": "astro check",
     "astro": "astro",
     "deploy": "wrangler pages deploy dist",
-    "deploy:prod": "wrangler pages deploy dist --project-name zandler-com-br"
+    "deploy:prod": "wrangler pages deploy dist --project-name zandler-github-io"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
