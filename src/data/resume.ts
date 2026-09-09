@@ -28,6 +28,27 @@ export interface Project {
 
 export const experience: Experience[] = [
   {
+    role: 'SSite Reliability Engineer (SRE) – Production Support & Service Operations',
+    company: 'Aubay Portugal at Bcp Bank',
+    location: 'Vila Nova de Poiares, PT',
+    start: '2026',
+    end: 'Present',
+    current: true,
+    summary: 'Support teams and services at BCP Millennium',
+    bullets: [
+      'Responsible for the reliability, availability, and operational support of critical banking services and production environments.',
+      'Monitor, troubleshoot, and resolve production incidents, ensuring service continuity and adherence to SLAs.',
+      'Work with Kubernetes to support and operate containerized applications and production workloads.',
+      'Use Terraform and Terragrunt to automate and manage infrastructure as code across environments.',
+      'Develop and maintain automation and internal tooling using Golang to improve operational efficiency and reduce manual processes.',
+      'Investigate incidents and perform root cause analysis, implementing corrective and preventive actions.',
+      'Collaborate with development, infrastructure, and platform teams to improve system reliability, observability, and operational processes.',
+      'Contribute to infrastructure automation, deployment processes, and continuous improvement of production services.',
+      'Participate in incident, problem, and change management activities within a critical banking environment.',
+    ],
+    badges: ['SRE', 'Developer Experience'],
+  },
+  {
     role: 'DevRel | Platform Engineer',
     company: 'BMG Bank',
     location: 'Belo Horizonte, BR',
@@ -96,7 +117,7 @@ export const experience: Experience[] = [
       'Designed an SRE training program covering Docker, Python and AWS.',
       'Established DevOps practices and CI/CD pipelines.',
     ],
-    badges: ['Docker', 'Python', 'AWS', 'CI/CD'],
+    badges: ['Docker', 'Kubernetes', 'Golang', 'AWS', 'CI/CD'],
   },
   {
     role: 'SRE / Solutions Architect',
@@ -117,10 +138,10 @@ export const experience: Experience[] = [
 export const education: Education[] = [
   {
     degree: 'B.S.',
-    field: 'Computer Science',
-    school: 'Universidade Federal de Minas Gerais',
-    start: '2008',
-    end: '2013',
+    field: 'Information Technology',
+    school: 'Faculdade UNINTER',
+    start: '2012',
+    end: '2016',
   },
 ];
 
