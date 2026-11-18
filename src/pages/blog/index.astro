@@ -1,0 +1,128 @@
+---
+import Layout from '../../components/Layout.astro';
+import EssayRow from '../../components/EssayRow.astro';
+import { getCollection } from 'astro:content';
+import { categories, categoryOf, readingTimeOf } from '../../data/content';
+import { withBase } from '../../data/site';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const featured = posts[0];
+const byCategory = (id: string) => posts.filter((p) => p.data.category === id);
+const count = (id: string) => byCategory(id).length;
+const sections = categories.map((c) => ({ ...c, posts: byCategory(c.id) }));
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<Layout
+  title="Essays"
+  description="Essays by Zandler Oliveira — design systems, systems architecture and engineering, written by hand."
+>
+  <section class="section">
+    <div class="container">
+      <header class="blog-head">
+        <div>
+          <p class="kicker">Essays</p>
+          <h1>Long-form, written by hand.</h1>
+          <p class="muted" style="max-width: 58ch; margin-bottom: 0;">
+            One essay per topic per month, in English first and Brazilian Portuguese after. No generated
+            text anywhere — <a href={withBase('/sobre')}>see the editorial policy</a>.
+          </p>
+        </div>
+        <a class="btn" href={withBase('/rss.xml')} rel="noopener">RSS</a>
+      </header>
+
+      <section class="blog-frame" aria-labelledby="blog-featured">
+        <header class="blog-frame-head">
+          <h2 id="blog-featured"><span class="num-prefix">00</span> Featured</h2>
+          <span class="blog-frame-count">Latest essays</span>
+        </header>
+        {featured ? (
+          <a class="featured" href={withBase(`/blog/${featured.id}/`)}>
+            <span class="featured-thumb" aria-hidden="true">
+              <span class="thumb-index">01</span>
+              <span class="thumb-rule"></span>
+              <span class="thumb-label">{categoryOf(featured).label}</span>
+            </span>
+            <span class="featured-body">
+              <span class="featured-meta">
+                <span class="cat-chip">Latest essay</span>
+                <time datetime={featured.data.date.toISOString()}>{dateFmt.format(featured.data.date)}</time>
+                <span>{readingTimeOf(featured)} min read</span>
+              </span>
+              <h3>{featured.data.title}</h3>
+              {featured.data.subtitle && <span class="featured-sub">{featured.data.subtitle}</span>}
+              <span class="featured-cta">Read essay <span aria-hidden="true">→</span></span>
+            </span>
+          </a>
+        ) : (
+          <div class="featured featured-empty">
+            <span class="featured-thumb" aria-hidden="true">
+              <span class="thumb-index">Ø</span>
+              <span class="thumb-rule"></span>
+              <span class="thumb-label">Awaiting the first essay</span>
+            </span>
+            <div class="featured-body">
+              <p class="blog-empty">The next essay will appear here first.</p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      <nav class="cat-tabs" aria-label="Jump to section">
+        {sections.map((c) => (
+          <a href={`#${c.id}`}>
+            {c.index} · {c.label} <span class="cat-count">({count(c.id)})</span>
+          </a>
+        ))}
+      </nav>
+
+      <section class="blog-frame" aria-labelledby="blog-all">
+        <header class="blog-frame-head">
+          <h2 id="blog-all"><span class="num-prefix">01</span> All essays</h2>
+          <span class="blog-frame-count">{posts.length} published</span>
+        </header>
+        {posts.length > 0 ? (
+          <div class="blog-groups">
+            {sections.map((c) => (
+              <section class="blog-group" id={c.id} aria-labelledby={`group-${c.id}`}>
+                <header class="blog-group-head">
+                  <h3 id={`group-${c.id}`}>
+                    <span class="num-prefix">{c.index}</span> {c.label}
+                  </h3>
+                  <p>{c.blurb}</p>
+                </header>
+                {c.posts.length > 0 ? (
+                  <div class="blog-cards">
+                    {c.posts.map((post, i) => (
+                      <EssayRow post={post} index={i + 1} ctx={c.label} level={4} />
+                    ))}
+                  </div>
+                ) : (
+                  <p class="blog-empty">Nothing published in this section yet.</p>
+                )}
+              </section>
+            ))}
+          </div>
+        ) : (
+          <p class="blog-empty">Nothing published yet — the first essays are being written.</p>
+        )}
+      </section>
+
+      <section class="blog-frame" aria-labelledby="blog-explore">
+        <header class="blog-frame-head">
+          <h2 id="blog-explore"><span class="num-prefix">02</span> Explore</h2>
+          <span class="blog-frame-count">by section</span>
+        </header>
+        <div class="explore-links">
+          {sections.map((c) => (
+            <a href={`#${c.id}`}>{c.label} <span>({count(c.id)})</span></a>
+          ))}
+          <a href={withBase('/rss.xml')}>RSS <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </div>
+  </section>
+</Layout>

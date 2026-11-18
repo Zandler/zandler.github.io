@@ -1,0 +1,32 @@
+---
+import { switchLanguagePath, type Lang } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const target = lang === 'en' ? 'pt' : 'en';
+const href = switchLanguagePath(Astro.url.pathname, target);
+---
+
+<a
+  class="lang-toggle"
+  href={href}
+  data-lang-choice={target}
+  hreflang={target === 'pt' ? 'pt-BR' : 'en'}
+  aria-label={target === 'pt' ? 'Mudar para português' : 'Switch to English'}
+>
+  <span class="lang-code" aria-current={lang === 'en' ? 'true' : undefined}>EN</span>
+  <span class="lang-sep" aria-hidden="true">/</span>
+  <span class="lang-code" aria-current={lang === 'pt' ? 'true' : undefined}>PT</span>
+</a>
+
+<script>
+  const link = document.querySelector<HTMLAnchorElement>('[data-lang-choice]');
+  link?.addEventListener('click', () => {
+    try {
+      localStorage.setItem('lang', link.dataset.langChoice ?? 'en');
+    } catch (error) {}
+  });
+</script>

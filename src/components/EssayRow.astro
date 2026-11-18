@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../data/site';
+import { categoryOf, readingTimeOf } from '../data/content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  index?: number;
+  ctx?: string;
+  level?: 3 | 4;
+}
+
+const { post, index, ctx, level = 3 } = Astro.props;
+const dateFmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const idxLabel = index !== undefined ? String(index).padStart(2, '0') : '··';
+---
+
+<article class="blog-card">
+  <span class="blog-card-thumb" aria-hidden="true">
+    <span class="thumb-index">{ctx ? ctx[0] : '§'}</span>
+    <span class="thumb-rule"></span>
+  </span>
+  <div class="blog-card-body">
+    <div class="blog-card-meta">
+      <span class="cat-chip">{categoryOf(post).label}</span>
+      <time datetime={post.data.date.toISOString()}>{dateFmt.format(post.data.date)}</time>
+      <span>{readingTimeOf(post)} min</span>
+      <span class="card-index">{idxLabel}</span>
+    </div>
+    {level === 4 ? (
+      <h4><a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a></h4>
+    ) : (
+      <h3><a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a></h3>
+    )}
+    {post.data.subtitle && <p class="blog-card-sub">{post.data.subtitle}</p>}
+    <span class="blog-card-cta">Read essay <span aria-hidden="true">→</span></span>
+  </div>
+</article>

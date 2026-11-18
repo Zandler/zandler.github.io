@@ -1,0 +1,73 @@
+/** Social links shown in the footer and on /sobre.
+ *  `icon` is any name from src/components/Icon.astro */
+export interface SocialLink {
+  url: string;
+  label: string;
+  icon?:
+    | 'github'
+    | 'linkedin'
+    | 'instagram'
+    | 'email'
+    | 'rss'
+    | 'download'
+    | 'arrow-right'
+    | 'arrow-left'
+    | 'sun'
+    | 'moon'
+    | 'youtube'
+    | 'phone'
+    | 'location';
+}
+
+export const site = {
+  title: 'Zandler Oliveira',
+  shortTitle: 'zandler',
+  description:
+    'Essays on design systems and systems architecture — written by hand, in English and Brazilian Portuguese.',
+  url: 'https://zandler.com.br',
+  author: {
+    name: 'Zandler Oliveira',
+    role: 'SRE / DevOps · Systems Architect',
+    email: 'falecom@zandler.com.br',
+    location: 'Vila Nova de Poiares, Portugal',
+    resume: '/cv.pdf',
+    resumeLabel: 'Download CV',
+  },
+  socials: {
+    email: { url: 'mailto:falecom@zandler.com.br', label: 'Email', icon: 'email' },
+    github: { url: 'https://github.com/zandler', label: 'GitHub', icon: 'github' },
+    linkedin: { url: 'https://www.linkedin.com/in/zandler-oliveira/', label: 'LinkedIn', icon: 'linkedin' },
+    rss: { url: '/rss.xml', label: 'RSS', icon: 'rss' },
+  } satisfies Record<string, SocialLink>,
+};
+
+export type SocialKey = keyof typeof site.socials;
+
+export const withBase = (path: string): string => {
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  if (!path.startsWith('/')) return path;
+  if (path.startsWith(`${base}/`)) return path;
+  return `${base}${path}`;
+};
+
+export type Lang = 'en' | 'pt';
+
+const localizedRoutes = ['/', '/blog', '/sobre', '/work'];
+
+export function langFromPath(path: string): Lang {
+  return /^\/pt(\/|$)/.test(path) ? 'pt' : 'en';
+}
+
+export function switchLanguagePath(path: string, target: Lang): string {
+  const clean = path.replace(/\/+$/, '') || '/';
+  const unprefixed = clean.replace(/^\/pt(?=\/|$)/, '') || '/';
+  const section = `/${unprefixed.split('/')[1] ?? ''}`;
+  const route = section === '/' ? '/' : section;
+  const base = localizedRoutes.includes(route) ? unprefixed : '/';
+  if (target === 'en') return withBase(base === '/' ? '/' : `${base}/`);
+  return withBase(base === '/' ? '/pt/' : `/pt${base}/`);
+}
+
+export function labelFor(lang: Lang, labels: { en: string; pt: string }): string {
+  return lang === 'pt' ? labels.pt : labels.en;
+}

@@ -1,0 +1,27 @@
+---
+import Layout from './Layout.astro';
+import { withBase } from '../data/site';
+
+interface Props {
+  title: string;
+  section: string;
+}
+
+const { title, section } = Astro.props;
+---
+
+<Layout lang="pt" title={title} description={`Versão em português — ${section}.`}>
+  <section class="section">
+    <div class="container">
+      <p class="kicker">{section}</p>
+      <h1>{title}</h1>
+      <div class="translation-note">
+        <h2>Conteúdo em preparação</h2>
+        <p>
+          Os textos desta seção serão escritos e traduzidos pelo autor. Enquanto isso, leia a
+          <a href={withBase('/')}>versão em inglês</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

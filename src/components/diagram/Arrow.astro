@@ -1,0 +1,12 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label } = Astro.props;
+---
+
+<span class="sys-arrow">
+  {label && <span>{label}</span>}
+  <span class="shaft" aria-hidden="true"></span>
+</span>

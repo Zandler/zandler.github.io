@@ -1,0 +1,119 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/space-grotesk';
+import '../styles/global.css';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import {
+  site,
+  withBase,
+  langFromPath,
+  switchLanguagePath,
+  labelFor,
+  type Lang,
+} from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  canonical?: string;
+  noindex?: boolean;
+  jsonLd?: object;
+  alternates?: { href: string; hreflang: string }[];
+  lang?: Lang;
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/img/og.jpg',
+  type = 'website',
+  canonical = site.url + Astro.url.pathname,
+  noindex = false,
+  jsonLd,
+  alternates = [],
+  lang = langFromPath(Astro.url.pathname),
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${site.shortTitle}` : site.title;
+const imageUrl = withBase(image);
+const htmlLang = lang === 'pt' ? 'pt-BR' : 'en';
+const enHref = lang === 'en' ? canonical : site.url + switchLanguagePath(Astro.url.pathname, 'en');
+const ptHref = lang === 'pt' ? canonical : site.url + switchLanguagePath(Astro.url.pathname, 'pt');
+const allAlternates = alternates.length
+  ? alternates
+  : [
+      { href: enHref, hreflang: 'en' },
+      { href: ptHref, hreflang: 'pt-BR' },
+      { href: enHref, hreflang: 'x-default' },
+    ];
+---
+
+<!doctype html>
+<html lang={htmlLang} data-lang={lang} data-theme="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.author.name} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="alternate" type="application/rss+xml" title={site.title} href={withBase('/rss.xml')} />
+    <meta name="generator" content={Astro.generator} />
+
+    {allAlternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <!-- Language: first visit follows the browser locale, later visits follow the saved choice -->
+    <script is:inline>
+      (function () {
+        try {
+          if (localStorage.getItem('lang')) return;
+          var browserLang = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+          if (browserLang.indexOf('pt') === 0 && (location.pathname === '/' || location.pathname === '')) {
+            localStorage.setItem('lang', 'pt');
+            location.replace('/pt/');
+          }
+        } catch (error) {}
+      })();
+    </script>
+
+    <!-- Theme: set before paint to avoid flash -->
+    <script is:inline>
+      const t = localStorage.getItem('theme');
+      const dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    </script>
+
+    {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">
+      {labelFor(lang, { en: 'Skip to content', pt: 'Ir para o conteúdo' })}
+    </a>
+    <Header active={Astro.url.pathname} lang={lang} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

@@ -1,0 +1,49 @@
+---
+import Layout from '../../../components/Layout.astro';
+import EssayRow from '../../../components/EssayRow.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((tag) => ({ params: { tag }, props: { tag } }));
+}
+
+type Props = { tag: string };
+
+const { tag } = Astro.props;
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.tags.includes(tag))).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout title={`#${tag}`} description={`Essays tagged #${tag}`}>
+  <section class="section">
+    <div class="container">
+      <header class="blog-head">
+        <div>
+          <p class="kicker"><a href={withBase('/blog')}>Essays</a> · Tag</p>
+          <h1>#{tag}</h1>
+        </div>
+        <a class="btn" href={withBase('/blog')}>All essays</a>
+      </header>
+
+      <section class="blog-frame" aria-labelledby="tag-essays">
+        <header class="blog-frame-head">
+          <h2 id="tag-essays">All essays</h2>
+          <span class="blog-frame-count">
+            {posts.length} {posts.length === 1 ? 'essay' : 'essays'}
+          </span>
+        </header>
+        {posts.length > 0 ? (
+          <div class="blog-cards" style="padding: 1.25rem;">
+            {posts.map((post, i) => <EssayRow post={post} index={i + 1} />)}
+          </div>
+        ) : (
+          <p class="blog-empty">Nothing published under this tag yet.</p>
+        )}
+      </section>
+    </div>
+  </section>
+</Layout>

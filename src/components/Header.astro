@@ -1,0 +1,55 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageToggle from './LanguageToggle.astro';
+import { withBase, labelFor, type Lang } from '../data/site';
+
+interface Props {
+  active?: string;
+  lang?: Lang;
+}
+
+const { active = '/', lang = 'en' } = Astro.props;
+
+const navLinks = [
+  { path: '/', en: 'Home', pt: 'Início' },
+  { path: '/blog', en: 'Essays', pt: 'Ensaios' },
+  { path: '/work', en: 'Work', pt: 'Experiência' },
+  { path: '/sobre', en: 'About', pt: 'Sobre' },
+].map((l) => ({
+  href: lang === 'pt' ? withBase(`/pt${l.path}`) : withBase(l.path),
+  label: labelFor(lang, { en: l.en, pt: l.pt }),
+}));
+
+const homeHref = lang === 'pt' ? withBase('/pt/') : withBase('/');
+
+const isActive = (href: string) =>
+  href === homeHref ? active === href || active === href.slice(0, -1) : active.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href={homeHref}>
+      <span class="num-prefix" aria-hidden="true">&gt;</span>
+      zandler<span class="brand-dot">.</span>
+    </a>
+    <nav aria-label={labelFor(lang, { en: 'Main', pt: 'Principal' })}>
+      <ul class="nav-links">
+        {
+          navLinks.map((l) => (
+            <li>
+              <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <LanguageToggle lang={lang} />
+        </li>
+        <li>
+          <ThemeToggle />
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
